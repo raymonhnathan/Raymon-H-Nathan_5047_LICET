@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Music</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    background-color: powderblue;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Add padding to the navbar */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+}
+
+.navbar-left a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    background-color: powderblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: powderblue;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.container h2 {
+    text-align: center;
+}
+
+.song-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.song {
+    width: calc(50% - 20px); /* Two songs side by side with some space between them */
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: indianred;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    max-width: 150px; /* Adjust image size */
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.card-content {
+    text-align: center;
+}
+
+.card-content audio {
+    width: 100%;
+}
+
+    </style>
+</head>
+<body>    
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="{% url 'music:display' %}">Home</a>
+            <a href="{% url 'music:add_song' %}">Add song</a>
+            <a href="{% url 'music:logout' %}">Logout</a>
+        </div>
+        <div class="navbar-right">
+            <form class="search-form" method="GET" action="{% url 'music:display' %}">
+                <input type="text" name="q" placeholder="Search by title...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Welcome to Music Web App</h2>
+        <ul class="song-list">
+            {% for song in songs %}
+            <li class="song">
+                <div class="card">
+                    <div class="card-content">
+                        {% if song.image_file %}
+                        <img src="{{ song.image_file.url }}" alt="{{ song.title }}">
+                        {% endif %}
+                        <div>
+                            <strong>{{ song.title }}</strong> - {{ song.artist }}
+                            <audio controls>
+                                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

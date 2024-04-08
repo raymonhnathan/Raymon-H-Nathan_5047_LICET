@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Song</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: powderblue;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: black;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.container h2 {
+    background-color: black;
+    color: black;
+    text-align: center;
+}
+
+form {
+    max-width: 600px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the form horizontally */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    background-color: powderblue;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form input[type="submit"]:hover {
+    background-color: powderblue;
+}
+
+
+.navbar {
+    background-color: powderblue;
+    overflow: hidden;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: black;
+    color: black;
+}
+
+    </style>
+</head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <a href="{% url 'music:display' %}">Home</a>
+                <a href="{% url 'music:logout' %}">Logout</a>
+            </div>
+            <h2>Add Song</h2>
+            <form class="form-container" action="{% url 'music:add_song' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="artist">Artist:</label>
+                <input type="text" id="artist" name="artist" required>
+                <label for="audio_file">Audio File:</label>
+                <input type="file" id="audio_file" name="audio_file" accept="audio/mpeg" required>
+                <label for="image_file">Image File:</label>
+                <input type="file" id="image_file" name="image_file" accept="media/jpg" required>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+    </body>
+</html>
